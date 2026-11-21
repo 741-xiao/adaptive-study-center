@@ -1,0 +1,4 @@
+interface:
+  display_name: "分步备考学习中心"
+  short_description: "用教材和题库生成分步追问、独立题库与错题复习的离线学习中心"
+  default_prompt: "使用 $adaptive-study-center，把我提交的知识文件和题目做成与计算机网络示例同风格的完整 HTML 学习中心。"

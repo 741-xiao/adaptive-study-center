@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>计算机网络 · 算法与计算题通关手册（第 1—6 章）</title>
+<style>
+:root{
+  --bg:#f5f7fa; --card:#fff; --line:#e2e7ee; --ink:#1e2530; --sub:#5d6776;
+  --blue:#2f6fdb; --blue-bg:#eef4ff; --green:#15803d; --green-bg:#ecf8f0;
+  --orange:#bd5f0a; --orange-bg:#fff4e6; --purple:#6846bd; --purple-bg:#f3efff;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono","Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+a{color:var(--blue);text-decoration:none}
+code{font-family:var(--mono);background:#eef1f5;border:1px solid #e0e5ec;border-radius:4px;padding:1px 5px;font-size:.9em;color:#243b6b}
+.app{display:grid;grid-template-columns:252px minmax(0,1fr);max-width:1320px;margin:0 auto;gap:0}
+
+/* ---------- 侧栏 ---------- */
+aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:#fff;border-right:1px solid var(--line);padding:22px 16px 40px}
+aside .brand{font-size:15px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+aside .brand small{display:block;font-weight:400;color:var(--sub);font-size:12px;margin-top:3px}
+.prog{background:var(--blue-bg);border-radius:8px;padding:10px 12px;margin:16px 0 14px;font-size:12.5px;color:#274a8c}
+.prog b{font-size:17px}
+.progbar{height:5px;background:#d5e2fb;border-radius:5px;margin-top:8px;overflow:hidden}
+.progbar i{display:block;height:100%;width:0;background:var(--blue);border-radius:5px;transition:width .25s}
+aside .grp{margin:14px 0 4px;font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.5px;padding-left:6px}
+aside a.toc{display:block;font-size:12.8px;line-height:1.5;color:#3b4657;padding:5px 8px;border-radius:6px;border-left:2px solid transparent}
+aside a.toc:hover{background:var(--blue-bg);color:var(--blue)}
+aside a.toc .num{font-family:var(--mono);color:#9aa4b2;font-size:11px;margin-right:6px}
+aside .tip{margin-top:22px;font-size:11.5px;color:var(--sub);line-height:1.7;border-top:1px dashed var(--line);padding-top:14px}
+
+/* ---------- 主体 ---------- */
+main{padding:0 34px 90px;min-width:0}
+.hero{padding:34px 0 20px}
+.hero h1{margin:0 0 8px;font-size:27px;letter-spacing:.4px}
+.hero p{margin:0;color:var(--sub);font-size:14px;max-width:820px}
+.hero .meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 12px;font-size:12px;color:var(--sub)}
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(245,247,250,.96);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:10px;padding:9px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
+.toolbar input[type=search]{flex:1;min-width:170px;border:1px solid var(--line);border-radius:7px;padding:7px 11px;font-size:13px;background:#fff;color:var(--ink);outline:none}
+.toolbar input[type=search]:focus{border-color:var(--blue)}
+button{cursor:pointer;font-family:inherit;font-size:12.5px;border:1px solid var(--line);background:#fff;color:#3b4657;border-radius:7px;padding:7px 11px;transition:.15s}
+button:hover{border-color:var(--blue);color:var(--blue)}
+button.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+button.pri:hover{background:#255cbd;color:#fff}
+.lab{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--sub);cursor:pointer;white-space:nowrap}
+#hit{font-size:12px;color:var(--sub);min-width:70px}
+
+h2.chap{font-size:20px;margin:38px 0 4px;padding-bottom:9px;border-bottom:2px solid var(--blue);scroll-margin-top:70px}
+.chapintro{color:var(--sub);font-size:13.5px;margin:0 0 18px}
+h2.sec{font-size:19px;margin:40px 0 12px;scroll-margin-top:70px}
+
+/* ---------- 卡片 ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:11px;margin:0 0 16px;padding:18px 20px 16px;scroll-margin-top:70px;box-shadow:0 1px 2px rgba(20,35,60,.03)}
+.card.hide{display:none}
+.chd{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.chd .no{font-family:var(--mono);font-size:12px;color:#8b95a3;background:#f2f4f8;border-radius:5px;padding:2px 7px;margin-top:3px}
+.chd h3{margin:0;font-size:16.5px;flex:1;min-width:190px;line-height:1.5}
+.tag{font-size:11px;border-radius:5px;padding:2px 8px;white-space:nowrap;margin-top:3px;font-weight:600}
+.tag.calc{background:var(--blue-bg);color:var(--blue)}
+.tag.algo{background:var(--purple-bg);color:var(--purple)}
+.tag.sup{background:#eff2f6;color:#5d6776}
+.tag.hot{background:var(--orange-bg);color:var(--orange)}
+.done{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:var(--sub);cursor:pointer;white-space:nowrap;margin-top:4px}
+.done input{accent-color:var(--green)}
+.card.mastered{border-color:#bfe3c9}
+.row{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;margin:10px 0;font-size:14px}
+.lb{font-size:12px;color:var(--sub);font-weight:700;padding-top:3px;letter-spacing:.3px}
+.row ol,.row ul{margin:0;padding-left:20px}
+.row li{margin:2px 0}
+.fx{background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-family:var(--mono);font-size:14px;line-height:2;color:#20447e;overflow-x:auto}
+.fx div{white-space:nowrap}
+.ex{background:#fafbfd;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0 10px}
+.ex .q{font-size:14px;margin:4px 0 10px}
+.ex .q b{color:#243b6b}
+.sol{display:none;margin-top:10px;border-top:1px dashed var(--line);padding-top:11px}
+.sol.open{display:block}
+.sol ol{margin:0 0 10px;padding-left:20px;font-size:13.5px}
+.sol li{margin:4px 0}
+.ans{background:var(--green-bg);border-left:3px solid var(--green);border-radius:0 7px 7px 0;padding:8px 12px;font-size:14px;color:#14562f;font-weight:600}
+.trap{background:var(--orange-bg);border-left:3px solid var(--orange);border-radius:0 7px 7px 0;padding:8px 12px;font-size:13px;color:#7a440c;margin-top:10px}
+.source{color:#9aa4b2;font-size:11.5px;margin-top:9px}
+
+/* 速查表 */
+table{border-collapse:collapse;width:100%;background:#fff;font-size:13px;margin:10px 0 18px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#eff3f9;color:#33425a;font-weight:600}
+td:first-child{white-space:nowrap;color:#5d6776;font-family:var(--mono);font-size:12px}
+td:nth-child(2){font-weight:600}
+td:nth-child(3){font-family:var(--mono);font-size:12.5px;color:#20447e}
+.note{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;font-size:13.5px;margin:14px 0}
+.note h3{margin:0 0 8px;font-size:15px}
+.note ul{margin:0;padding-left:20px}
+footer{color:var(--sub);font-size:12px;text-align:center;padding:26px 0 0;border-top:1px solid var(--line);margin-top:40px}
+.empty{display:none;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:26px;text-align:center;color:var(--sub);font-size:14px}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  aside{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:16px}
+  aside .tocwrap{max-height:190px;overflow-y:auto}
+  main{padding:0 16px 60px}
+  .row{grid-template-columns:1fr;gap:3px}
+}
+@media print{
+  body{background:#fff}
+  aside,.toolbar,.ex>button,.done,.hero .meta{display:none!important}
+  .app{grid-template-columns:1fr}
+  main{padding:0}
+  .card{break-inside:avoid;box-shadow:none;border-color:#ccc;page-break-inside:avoid}
+  .sol{display:block!important}
+  h2.chap{break-after:avoid}
+  .fx,.ex,.trap,.ans{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+}
+.desk{padding:18px 0;border-block:1px solid #b7c8ce;margin-bottom:24px}.desk h2{font-size:21px;margin:8px 0}.desk p{margin:8px 0}.desk small{color:#49625e}.desk select,.desk input,.desk textarea{font:inherit;color:inherit;border:1px solid #acbbc5;border-radius:5px;padding:6px;background:white;max-width:100%}.desk textarea{width:100%}.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0}.desk .pri{background:#11685c;border-color:#11685c}.muted{color:#566572;font-size:13px}.feedback{border-left:3px solid #ab560e;padding-left:12px}.lesson{background:#edf4f3;padding:12px 16px;border-left:3px solid #297566}.desk details{margin:12px 0}.desk summary{cursor:pointer;color:#245975}.meter{height:12px;max-width:440px;display:flex;background:#dde6eb}.meter i:first-child{background:#167769}.meter i:last-child{background:#5584be}.desk .qtext{font-size:17px;font-weight:600}#quickwrap{overflow-x:auto}.desk :focus-visible{outline:2px solid #2362a7;outline-offset:2px}@media(max-width:900px){aside .tip{display:none}aside .tocwrap{max-height:80px}.toolbar{position:static}.hero{padding-top:18px}}@media print{.desk,.trainlink{display:none!important}}
+.hub{padding:32px 0 26px}.hub h1{margin:3px 0 0;font-size:29px;line-height:1.4}.hub p{margin:5px 0 20px;color:#536073}.hubgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tile{display:grid;grid-template-rows:34px auto auto auto;gap:4px;justify-items:start;text-align:left;padding:18px;color:white;background:var(--tone);border:0;border-radius:10px}.tile:hover,.tile:focus-visible{color:white;background:var(--tone);box-shadow:inset 0 0 0 3px var(--accent)}.tile svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.tile b{font-size:18px}.tile span{color:#fff;font-size:13px}.tile small{color:var(--accent);font-weight:600;margin-top:6px}.hubnav{margin:16px 0 10px}.hubnav button,.pathnode{color:#165c55;font-weight:600}.pathline{margin:10px 0;padding:10px 0;border-bottom:1px solid var(--line)}.evidence{display:flex;flex-wrap:wrap;gap:18px;margin:15px 0}.evidence b{display:block;font:700 23px/1.2 var(--mono);color:#21544c}.evidence span{color:#43566a;font-size:13px}#desk[hidden],#hub[hidden],#coachControls[hidden],#backHub[hidden]{display:none}.hero{padding:12px 0}.hero h1{font-size:20px}@media(max-width:900px){.hub{padding-top:18px}.hubgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{padding:14px}.app>aside{display:none}.hub h1{font-size:25px}}@media print{.hub,.hubnav{display:none!important}}
+</style>
+<link rel="stylesheet" href="exam.css"><link rel="stylesheet" href="account.css"><script src="account.js"></script>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand">算法与计算题手册<small>计算机网络 · 六章原创练习</small></div>
+  <a class="toc" href="#desk">进入分步训练 ↓</a><div class="prog">自评掌握 <b id="pcount">0</b> / <span id="ptotal">0</span> 条
+    <div class="progbar"><i id="pbar"></i></div>
+  </div>
+  <div id="toc" class="tocwrap"></div>
+  <div class="tip">用法：<b>先自己算</b>，再点开逐步解答对答案；算对的勾「已掌握」，进度会自动保存。顶部搜索框可输「分片」「掩码」「RTT」直接跳题。打印时所有解答会自动展开。</div>
+</aside>
+
+<main>
+  <section class="hub" id="hub"><small>计算机网络 · 备考手册</small><h1 tabindex="-1" id="hubTitle">AI 智能学习中心</h1><p>选择功能，开始学习</p><div class="hubgrid" id="hubGrid"></div></section>
+  <div class="hubnav"><button id="backHub" hidden>← 学习中心</button></div>
+  <section id="desk" class="desk" hidden aria-label="学习模块"><small id="sectionName"></small><div class="controls" id="coachControls"><label>专项 <select id="track"></select></label><button id="start">开始诊断</button><button id="plan">我的复习计划</button></div><div id="stage" aria-live="polite" tabindex="-1"></div><small id="storageNote" role="status"></small></section>
+  <div class="hero">
+    <h1>计算机网络 · 分步备考手册</h1>
+    <p>算法与计算题　/　从识别题型，到独立写出卷面答案</p>
+    <div class="meta">
+      <span class="pill" id="pillTotal">共 0 条</span>
+      <span class="pill">六章全覆盖</span>
+      <span class="pill">含单位和边界检查</span>
+      <span class="pill">可打印 / 存 PDF</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="搜索：分片 / 掩码 / CRC / 利用率 / RTO / RTT …">
+    <span id="hit"></span>
+    <label class="lab"><input type="checkbox" id="onlyLeft"> 只看未掌握</label>
+    <button id="expand">展开全部解答</button>
+    <button id="collapse">收起全部解答</button>
+    <button id="reset">清空掌握记录</button>
+    <button class="pri" onclick="window.print()">打印 / 存 PDF</button>
+  </div>
+
+  <div id="content"></div>
+  <div class="empty" id="empty">没有匹配的条目，换个关键词试试。</div>
+
+  <footer>Adaptive Study Center · MIT · 原创教学示例</footer>
+</main>
+</div>
+
+<script>
+const CHAPS=[{"n":1,"t":"第 1 章 · 串行发送","sub":"串行发送","intro":"发送耗时等于比特数除以链路比特率。"},{"n":2,"t":"第 2 章 · 多级信号","sub":"多级信号","intro":"理想无噪声模型下，每个有 M 种状态的码元可表示 log₂(M) bit。"},{"n":3,"t":"第 3 章 · 比特填充","sub":"比特填充","intro":"在数据部分连续五个 1 后插入一个 0。"},{"n":4,"t":"第 4 章 · 子网容量","sub":"子网容量","intro":"普通 IPv4 广播子网可用地址数为 2 的主机位数次方减二。"},{"n":5,"t":"第 5 章 · 累计确认","sub":"累计确认","intro":"按序接收时，确认号表示下一期望字节的序号。"},{"n":6,"t":"第 6 章 · 往返等待","sub":"往返等待","intro":"理想化模型：新建 TCP 获取单个极小文档，忽略其他开销，需要两次往返。"}];
+const D=[{"n":2,"ch":1,"t":"串行发送","tag":"calc","when":"发送耗时等于比特数除以链路比特率。","f":["发送耗时等于比特数除以链路比特率。"],"steps":["先把字节数乘 8","再除以比特率。"],"ex":"625 B 经过 1 Mbit/s 发送器需要多少毫秒？","sol":["先把字节数乘 8；再除以比特率。","5 ms"],"ans":"5 ms","trap":"不要把发送时延和链路传播时间混在一起。","src":"公开示例 · 第 1 章"},{"n":8,"ch":2,"t":"多级信号","tag":"calc","when":"理想无噪声模型下，每个有 M 种状态的码元可表示 log₂(M) bit。","f":["理想无噪声模型下，每个有 M 种状态的码元可表示 log₂(M) bit。"],"steps":["先求每码元信息量","再乘每秒码元数。"],"ex":"每秒发送 625 个四状态码元，可表示多少 bit/s？","sol":["先求每码元信息量；再乘每秒码元数。","1250 bit/s"],"ans":"1250 bit/s","trap":"码元每秒不总等于比特每秒。","src":"公开示例 · 第 2 章"},{"n":17,"ch":3,"t":"比特填充","tag":"calc","when":"在数据部分连续五个 1 后插入一个 0。","f":["在数据部分连续五个 1 后插入一个 0。"],"steps":["用 0 分隔各段","逐段数原始连续 1 的长度。"],"ex":"若数据正好由 5 组 111110 拼成，按五个 1 后插 0 的规则会新增多少位？","sol":["用 0 分隔各段；逐段数原始连续 1 的长度。","5 位"],"ans":"5 位","trap":"插入的 0 不属于原数据。","src":"公开示例 · 第 3 章"},{"n":27,"ch":4,"t":"子网容量","tag":"calc","when":"普通 IPv4 广播子网可用地址数为 2 的主机位数次方减二。","f":["普通 IPv4 广播子网可用地址数为 2 的主机位数次方减二。"],"steps":["从 32 减去前缀长度","保留网络地址和广播地址。"],"ex":"普通 /24 广播子网可用多少个主机地址？","sol":["从 32 减去前缀长度；保留网络地址和广播地址。","254 个"],"ans":"254 个","trap":"此题是传统广播子网，不推广到 /31 或 /32。","src":"公开示例 · 第 4 章"},{"n":41,"ch":5,"t":"累计确认","tag":"calc","when":"按序接收时，确认号表示下一期望字节的序号。","f":["按序接收时，确认号表示下一期望字节的序号。"],"steps":["找到首字节序号","加上数据段字节数。"],"ex":"起始序号 900，按序收到 125 B 数据，不计 SYN 和 FIN。下一确认号是多少？","sol":["找到首字节序号；加上数据段字节数。","1025"],"ans":"1025","trap":"不要把确认号写成最后一个已收到的序号。","src":"公开示例 · 第 5 章"},{"n":51,"ch":6,"t":"往返等待","tag":"calc","when":"理想化模型：新建 TCP 获取单个极小文档，忽略其他开销，需要两次往返。","f":["理想化模型：新建 TCP 获取单个极小文档，忽略其他开销，需要两次往返。"],"steps":["列出建立连接和请求响应","合计两个 RTT。"],"ex":"无缓存、新建 TCP、明文 HTTP 请求一个极小文档。仅计两次往返，RTT 为 35 ms，总等待为多少毫秒？","sol":["列出建立连接和请求响应；合计两个 RTT。","70 ms"],"ans":"70 ms","trap":"该模型不含 DNS、TLS、处理和正文传输时间。","src":"公开示例 · 第 6 章"}];
+const KEY='cn_alg_mastered_v1';
+let mastered=[];
+try{ mastered=JSON.parse(studyStore.getItem(KEY)||'[]'); }catch(e){ mastered=[]; }
+if(!Array.isArray(mastered)) mastered=[];
+
+const TAG={
+  calc:['必考计算','calc'],
+  algo:['算法流程','algo'],
+  sup:['教材补充','sup'],
+  hot:['易错重点','hot']
+};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmt(s){return esc(s).replace(/\[\[(.+?)\]\]/g,'<code>$1</code>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+function pad(n){return n<10?'0'+n:''+n;}
+function save(){try{studyStore.setItem(KEY,JSON.stringify(mastered));}catch(e){}}
+
+function quickHTML(){
+  let h='<section id="quickwrap"><h2 class="sec" id="quick">一页纸公式速查</h2>';
+  h+='<p class="chapintro">考前只看这张表也能把公式捡回来。点目录里的条目可跳到完整步骤和例题。</p>';
+  CHAPS.forEach(function(c){
+    h+='<div style="font-size:14px;font-weight:700;margin:18px 0 6px;color:#33425a">'+esc(c.t)+'　<span style="font-weight:400;color:#8b95a3;font-size:12px">'+esc(c.sub)+'</span></div>';
+    h+='<table><thead><tr><th>编号</th><th>题型</th><th>公式 / 规则</th></tr></thead><tbody>';
+    D.filter(function(d){return d.ch===c.n;}).forEach(function(d){
+      h+='<tr><td>'+pad(d.n)+'</td><td>'+fmt(d.t)+'</td><td>'+d.f.map(fmt).join('<br>')+'</td></tr>';
+    });
+    h+='</tbody></table>';
+  });
+  h+='</section>';
+  return h;
+}
+
+function cardHTML(d){
+  const tg=TAG[d.tag]||TAG.calc;
+  let h='<article class="card" id="a'+d.n+'" data-n="'+d.n+'" data-ch="'+d.ch+'">';
+  h+='<div class="chd"><span class="no">'+pad(d.n)+'</span><h3>'+fmt(d.t)+'</h3>';
+  h+='<span class="tag '+tg[1]+'">'+tg[0]+'</span>';
+  h+='<label class="done"><input type="checkbox" data-mark="'+d.n+'"> 已掌握</label></div>';
+  h+='<div class="row"><span class="lb">什么时候用</span><div>'+fmt(d.when)+'</div></div>';
+  h+='<div class="fx">'+d.f.map(fmt).map(function(x){return '<div>'+x+'</div>';}).join('')+'</div>';
+  h+='<div class="row"><span class="lb">怎么做</span><ol>'+d.steps.map(function(x){return '<li>'+fmt(x)+'</li>';}).join('')+'</ol></div>';
+  h+='<div class="ex"><span class="lb">例题 · 先自己算</span><p class="q">'+fmt(d.ex)+'</p>';
+  h+='<button class="trainlink pri" data-practice="'+d.n+'">原题分步练习</button> <button data-act="sol" data-n="'+d.n+'">看逐步解答</button>';
+  h+='<div class="sol" id="s'+d.n+'"><span class="lb">逐步解答</span><ol>'+d.sol.map(function(x){return '<li>'+fmt(x)+'</li>';}).join('')+'</ol>';
+  h+='<div class="ans">答案：'+fmt(d.ans)+'</div></div></div>';
+  h+='<div class="trap"><b>最容易错：</b>'+fmt(d.trap)+'</div>';
+  h+='<div class="source">出处：'+fmt(d.src||'—')+'</div>';
+  h+='</article>';
+  return h;
+}
+
+let html=quickHTML();
+CHAPS.forEach(function(c){
+  html+='<h2 class="chap" id="ch'+c.n+'">'+esc(c.t)+'</h2>';
+  html+='<p class="chapintro" data-intro="'+c.n+'">'+esc(c.intro)+'</p>';
+  D.filter(function(d){return d.ch===c.n;}).forEach(function(d){ html+=cardHTML(d); });
+});
+document.getElementById('content').innerHTML=html;
+
+/* 目录 */
+let toc='<div class="grp"><a class="toc" href="#quick">★　一页纸公式速查</a></div>';
+CHAPS.forEach(function(c){
+  toc+='<div class="grp">'+esc(c.t)+'</div>';
+  D.filter(function(d){return d.ch===c.n;}).forEach(function(d){
+    toc+='<a class="toc" href="#a'+d.n+'"><span class="num">'+pad(d.n)+'</span>'+esc(d.t)+'</a>';
+  });
+});
+document.getElementById('toc').innerHTML=toc;
+document.getElementById('ptotal').textContent=D.length;
+document.getElementById('pillTotal').textContent='共 '+D.length+' 条 · 六章全覆盖';
+
+/* 搜索索引 */
+document.querySelectorAll('.card').forEach(function(c){ c.dataset.s=c.textContent.toLowerCase(); });
+function markChecked(){
+  document.querySelectorAll('.card').forEach(function(c){
+    const n=+c.dataset.n;
+    const cb=c.querySelector('[data-mark]');
+    if(cb) cb.checked=mastered.indexOf(n)>=0;
+    c.classList.toggle('mastered',mastered.indexOf(n)>=0);
+  });
+}
+function updateProg(){
+  document.getElementById('pcount').textContent=mastered.length;
+  document.getElementById('pbar').style.width=(100*mastered.length/D.length)+'%';
+}
+function applyFilter(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const only=document.getElementById('onlyLeft').checked;
+  let vis=0;
+  document.querySelectorAll('.card').forEach(function(c){
+    const n=+c.dataset.n;
+    const okQ=(!q)||c.dataset.s.indexOf(q)>=0;
+    const okM=(!only)||mastered.indexOf(n)<0;
+    const show=okQ&&okM;
+    c.classList.toggle('hide',!show);
+    if(show) vis++;
+  });
+  CHAPS.forEach(function(c){
+    const h=document.getElementById('ch'+c.n);
+    const intro=document.querySelector('[data-intro="'+c.n+'"]');
+    let any=false;
+    document.querySelectorAll('.card[data-ch="'+c.n+'"]').forEach(function(x){ if(!x.classList.contains('hide')) any=true; });
+    h.style.display=any?'':'none';
+    intro.style.display=any?'':'none';
+  });
+  document.getElementById('quickwrap').style.display=q?'none':'';
+  document.getElementById('empty').style.display=(vis===0)?'block':'none';
+  document.getElementById('hit').textContent=q?('命中 '+vis+' 条'):(only?('还剩 '+vis+' 条'):'');
+}
+
+document.getElementById('content').addEventListener('click',function(e){
+  const b=e.target.closest('[data-act="sol"]');
+  if(!b) return;
+  const box=document.getElementById('s'+b.dataset.n);
+  const open=box.classList.toggle('open');
+  b.textContent=open?'收起解答':'看逐步解答';
+});
+document.getElementById('content').addEventListener('change',function(e){
+  const cb=e.target.closest('[data-mark]');
+  if(!cb) return;
+  const n=+cb.dataset.mark;
+  const i=mastered.indexOf(n);
+  if(cb.checked && i<0) mastered.push(n);
+  if(!cb.checked && i>=0) mastered.splice(i,1);
+  cb.closest('.card').classList.toggle('mastered',cb.checked);
+  save(); updateProg();
+  if(document.getElementById('onlyLeft').checked) applyFilter();
+});
+function setAll(open){
+  document.querySelectorAll('.sol').forEach(function(s){ s.classList.toggle('open',open); });
+  document.querySelectorAll('[data-act="sol"]').forEach(function(b){ b.textContent=open?'收起解答':'看逐步解答'; });
+}
+document.getElementById('expand').addEventListener('click',function(){setAll(true);});
+document.getElementById('collapse').addEventListener('click',function(){setAll(false);});
+document.getElementById('reset').addEventListener('click',function(){
+  mastered=[]; save(); markChecked(); updateProg(); applyFilter();
+  const b=this, old=b.textContent; b.textContent='已清空';
+  setTimeout(function(){b.textContent=old;},1200);
+});
+document.getElementById('q').addEventListener('input',applyFilter);
+document.getElementById('onlyLeft').addEventListener('change',applyFilter);
+
+markChecked(); updateProg(); applyFilter();
+</script>
+<script src="exam-data.js"></script><script src="course-docs.js"></script><script src="exam-common.js"></script><script src="learning-centers.js"></script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id), stage=$('stage');
+const bank=new Map(D.map(d=>[d.n,d]));
+const q=(text,unit,value,work,wrong={})=>({text,unit,value,work,wrong});
+// 每个专项有一道前测、一组分解题和一道改变条件的独立题。
+const tracks={
+2:{name:'发送与传播',plain:'想象一列车通过闸门：整列车离开闸门，对应发送完毕；最后一节车厢还要走到终点，对应传播。',rule:'发送时延 L/R，传播时延 d/v。把两项换成同一时间单位，再加处理与排队。',edge:'只换网卡，不换光纤：受影响的是把比特推上链路的时间，不是信号在介质中的速度。',
+ pre:q('同一条光纤，单向传播原需 10 ms。只把发送速率翻倍，传播时延是多少？','ms',10,'距离和介质不变，d/v 仍是 10 ms。',{5:'把发送速率误当成了信号传播速度。'}),
+ steps:[q('1500 B 的分组有多少比特？','bit',12000,'1500 × 8 = 12000 bit。',{1500:'B 是字节，不是 bit；1 B = 8 bit。'}),q('把这 12000 bit 推入 100 Mbit/s 的链路，需多少毫秒？','ms',0.12,'12000 ÷ 10⁸ s × 1000 = 0.12 ms。',{'0.00012':'算出的是秒，还没有换成毫秒。'}),q('2000 km 的链路，传播速度 2×10⁸ m/s。仅传播需多久？','ms',10,'2×10⁶ ÷ (2×10⁸) × 1000 = 10 ms。'),q('发送 0.12 ms，传播 10 ms，处理与排队合计 2 ms。总时延呢？','ms',12.12,'0.12 + 10 + 2 = 12.12 ms。')],
+ test:k=>q(`单链路传送 ${1250*k} B，速率 100 Mbit/s，传播 8 ms，处理与排队合计 1 ms。只把发送速率翻倍后，总时延是多少？`,'ms',9+k/20,`发送 = ${1250*k} × 8 ÷ (200×10⁶) × 1000 = ${k/20} ms；再加 8 + 1 ms。`)},
+8:{name:'码元与数据率',plain:'一次举牌可以从 8 张牌里选一张。描述选的是哪一张，需要 3 个二进制位。',rule:'M 种可区分状态，每码元携带 log₂M bit（M 为 2 的整数次幂）；数据率 = 波特率 × 每码元比特数。',edge:'提高码元速率和增加每码元状态数是两种不同操作。状态数翻倍，每码元只多携带 1 bit。',
+ pre:q('理想编码使用 8 种状态，一个码元携带几比特？','bit',3,'2³ = 8，所以是 3 bit。',{8:'状态数不是比特数。'}),steps:[q('16 种状态要用几比特编号？','bit',4,'2⁴ = 16。'),q('每秒 2000 个码元，每码元 4 bit，每秒多少 bit？','bit/s',8000,'2000 × 4 = 8000 bit/s。')],test:k=>q(`速率为 ${4*k} kbit/s，采用 16 种状态的理想编码。所需的码元速率是多少？`,'Baud',k*1000,`${4*k} × 1000 ÷ 4 = ${k*1000} Baud。`)},
+17:{name:'零比特填充',plain:'给数据加上路标：发送方每发出连续五个 1 就插一个 0，接收方按相同规则去掉它。',rule:'只扫描帧的数据区。遇 0 计数清零；连续五个 1 后插 0，再从零计数。',edge:'末尾即使没有下一个数据位，已经凑满五个 1 也要填充。不能用整串 1 的总数除以五。',
+ pre:q('原数据 111011 中有五个 1，要插几个 0？','个',0,'中间的 0 打断计数，最长只有三个连续的 1。',{1:'你数的是总数，不是连续个数。'}),steps:[q('原数据 11111 发送时插几个 0？','个',1,'满五个 1，立即插入一个 0。'),q('原数据 11111011111 填充后总长多少位？','bit',13,'11 个原始位，两段各插 1 位，共 13 位。')],test:k=>q(`数据是 ${k} 组 111110，后面再接 1111；不计帧定界符。填充后总长度是多少？`,'bit',7*k+4,`原长 6×${k}+4，每组插一位，末尾四个 1 不插，共 ${7*k+4} 位。`)},
+27:{name:'主机数与前缀',plain:'子网像一排门牌。传统 IPv4 广播子网里，首尾两个号码留作网络地址和广播地址。',rule:'找最小的 h，使 2ʰ−2 ≥ 可用主机需求；前缀长度 = 32−h。',edge:'问地址总数与问可用主机数不同。这里讨论普通广播子网，不套用到 /31 点到点链路。',
+ pre:q('普通 IPv4 广播子网共有 64 个地址，可分给主机几个？','个',62,'64 − 2 = 62。',{64:'没有留出网络地址和广播地址。'}),steps:[q('要容纳 63 台主机，加上保留地址至少需要几个地址？','个',65,'63 + 2 = 65。'),q('最小能容纳 65 个地址的块有几个主机位？','位',7,'2⁶ = 64 不够，2⁷ = 128。'),q('IPv4 地址中有 7 个主机位，前缀长度是多少？','位',25,'32 − 7 = 25，写作 /25。')],test:k=>{const h=3+k,hosts=2**h-1;return q(`普通广播子网要支持 ${hosts} 台主机。为节约地址，前缀最长可用多少位？`,'位',31-h,`${hosts}+2 超过 2 的 ${h} 次幂，主机位取 ${h+1}，前缀为 ${31-h}。`)}},
+41:{name:'TCP 累计确认',plain:'把数据看成按字节编号的一排信件。确认号写的是“我接下来还缺哪一封”，不是最后收到哪一封。',rule:'按序、无缺口时，ACK = 首字节序号 + 数据字节数。此处无 SYN、FIN，不考虑回绕。',edge:'后面的段先到了，不会填平前面的缺口；只看累计确认号，不把选择确认算进去。',
+ pre:q('接收方按序收到字节 100 至 199（含两端），下一个期望序号是多少？','',200,'下一个缺少的字节是 200。',{199:'把最后收到与下一个期望混淆了。'}),steps:[q('数据起始序号 500，长度 40 B，最后一个字节序号是多少？','',539,'500 + 40 − 1 = 539。'),q('接收方原本期望 500，完整收到上述数据，累计确认号是多少？','',540,'最后一个字节号加 1，得到 540。')],test:k=>q(`原本期望 ${k*1000}，随后收到从该序号起连续的 80 B；再收到起始序号 ${k*1000+120} 的 30 B，中间仍缺数据。累计确认号是多少？`,'',k*1000+80,`首个缺失字节是 ${k*1000+80}。后来的乱序段不能推进累计确认。`)},
+51:{name:'HTTP 文档耗时',plain:'一次往返像寄出一封信并等到回信。新建连接和发请求分别要等，收到第一个字节后还需传完正文。',rule:'题设为新建 TCP、明文 HTTP、单文档，无 DNS、排队与处理耗时：T = 2 RTT + L/R。',edge:'如果 TCP 已经建好，省去建连的 RTT，但不能省去请求与响应的往返。',
+ pre:q('上述简化模型中，从新建 TCP 到收到单个极小文档，需几个 RTT？','个',2,'建连 1 RTT，请求至响应首字节 1 RTT。',{1:'遗漏了建连或请求响应中的一次往返。'}),steps:[q('文档 10000 B，在 1 Mbit/s 链路上发完需多久？','ms',80,'10000 × 8 ÷ 10⁶ × 1000 = 80 ms。'),q('新建 TCP，RTT 为 30 ms，正文发送需 80 ms，总计多久？','ms',140,'2 × 30 + 80 = 140 ms。')],test:k=>q(`已建立一条空闲 TCP 连接，通过明文 HTTP 获取一个文档。RTT 为 ${k*10} ms，正文发送需 16 ms。忽略其他耗时，总计多久？`,'ms',10*k+16,`已建连，故只加一个 RTT：${10*k} + 16 = ${10*k+16} ms。`)}};
+const storeKey='net_exam_coach_1'; let history={};
+try{const data=JSON.parse(studyStore.getItem(storeKey));if(data&&typeof data==='object'&&!Array.isArray(data))history=data;}catch{ $('storageNote').textContent='无法读取旧记录；本轮仍可练习。'; }
+const persist=()=>{try{studyStore.setItem(storeKey,JSON.stringify(history));}catch{$('storageNote').textContent='此浏览器不允许保存记录，关闭后本轮进度会丢失。';}};
+const ids=Object.keys(tracks).map(Number),day=86400000;
+let id=2,phase='pre',index=0,cur,guide,guideIndex,guideLines=[],serial=false;
+const rec=()=>history[id]??={wins:0,miss:0,streak:0,due:0,last:0,seed:0};
+const btn=(act,label,primary=false)=>`<button type="button" data-do="${act}" class="${primary?'pri':''}">${label}</button>`;
+const title=()=>`<h2>${tracks[id].name}</h2>`;
+const todayDue=r=>r?.due&&r.due<=Date.now();
+const priority=i=>{const r=history[i];return todayDue(r)?0:r?.miss&&!r.streak?1:!r?.wins?2:3;};
+const order=()=>[...ids].sort((a,b)=>priority(a)-priority(b)||(history[a]?.due||0)-(history[b]?.due||0));
+function simulate(){return `<details><summary>观察：只改变网卡速率</summary><label>发送速率 <input type="range" min="10" max="200" step="10" value="100" id="speed"></label><output id="reading"></output><div class="meter" aria-hidden="true"><i></i><i></i></div><small>1500 B，单向传播固定 10 ms。绿：发送；蓝：传播。</small></details>`;}
+function meter(){const s=$('speed');if(!s)return;const t=12/Number(s.value);$('reading').textContent=`${s.value} Mbit/s：发送 ${+t.toFixed(3)} ms，传播 10 ms`;const bars=stage.querySelector('.meter').children;bars[0].style.width=100*t/(10+t)+'%';bars[1].style.width=1000/(10+t)+'%';}
+stage.addEventListener('input',e=>{if(e.target.id==='speed')meter();});
+function explain(){const t=tracks[id];return `<div class="lesson"><strong>先理解</strong><p>${t.plain}</p><details open><summary>考试公式</summary>${t.rule}</details><details><summary>条件与反例</summary>${t.edge}</details>${id===2?simulate():''}</div>`;}
+function ask(kind){phase=kind;const t=tracks[id];if(kind==='test'){const r=rec();r.seed=(r.seed%7)+1;persist();cur=t.test(r.seed);}else cur=kind==='pre'?t.pre:t.steps[index];
+ serial=false;stage.innerHTML=title()+`<small>${kind==='pre'?'01　起点诊断':kind==='step'?`02　基础练习 · ${index+1}/${t.steps.length}`:'03　闭卷变式 · 独立作答'}</small><p class="qtext">${cur.text}</p><form id="answerForm" class="controls"><label>答案 <input id="answer" type="text" inputmode="decimal" autocomplete="off" size="12"> ${cur.unit}</label><button class="pri">提交</button>${btn('unknown','不会，先讲这一步')}</form><div id="result"></div>`;}
+function grade(passUnknown=false){if(serial)return;const val=$('answer').value.trim().normalize('NFKC');if(!passUnknown&&(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(val)||!Number.isFinite(Number(val)))){$('result').textContent='请输入一个数值，单位已在框旁标明。';return;}
+ serial=true;const ok=!passUnknown&&Math.abs(Number(val)-cur.value)<1e-8,r=rec();const message=passUnknown?'这一问暂时不会。':ok?'正确。':(cur.wrong[Number(val)]||'数值不符。请把你的算式与下面这一步对照。');
+ r.last=Date.now();if(!ok){r.miss++;r.streak=0;r.due=r.last;r.error=cur.text;r.errors=[{text:cur.text,given:passUnknown?'不会':val,reason:message,work:cur.work},...(r.errors||[])].slice(0,12);}
+ if(ok&&phase==='test'){r.wins++;r.streak++;r.due=r.last+day*[1,3,7][Math.min(r.streak-1,2)];}
+ persist();$('answerForm').hidden=true;$('answerForm').style.display='none';let html=`<div class="feedback"><b>${message}</b><p>卷面写法：${cur.work}</p></div>`;
+ if(ok&&phase==='test'){html+=`<p>本次变式独立答对。下次复习：${new Date(r.due).toLocaleDateString('zh-CN')}。</p>${btn('plan','查看下一项',true)}`;}
+ else if(!ok){html+=explain()+btn(phase==='step'?'redo':'basics',phase==='step'?'遮住讲解，重做这一步':'从基础步骤练起',true);}
+ else if(phase==='pre'){html+=btn('test','直接挑战变式',true)+' '+btn('basics','先做分步练习');}
+ else{html+=btn(index+1<tracks[id].steps.length?'next':'test',index+1<tracks[id].steps.length?'下一步':'换题独立检验',true);}
+ $('result').innerHTML=html;meter();}
+function plan(){const items=order();stage.innerHTML=`<h2>我的复习计划</h2><p>独立答对过变式：${ids.filter(i=>history[i]?.wins).length} / ${ids.length} 项　·　到期：${ids.filter(i=>todayDue(history[i])).length} 项</p>`+items.map(i=>{const r=history[i],state=!r?.last?'未诊断':todayDue(r)?'待复习':r.streak?`复习日 ${new Date(r.due).toLocaleDateString('zh-CN')}`:'待独立检验';return `<div class="controls"><button data-route="${i}">${tracks[i].name}</button><span>${state}</span>${r?.error?`<small>最近卡点：${esc(r.error)}</small>`:''}</div>`;}).join('')+`<p class="muted">优先复习到期和答错的专项。连续独立答对后，依次间隔 1、3、7 天复测。记录仅存于当前浏览器。</p>`;}
+function route(i,auto=false){id=i;$('track').value=i;index=0;ask(auto&&history[i]?.wins?'test':'pre');}
+function startGuide(n){panel('learn');guide=bank.get(n);guideIndex=0;guideLines=[];guideStep();$('desk').scrollIntoView();}
+function guideStep(){const d=guide;const prompts=['审题：已知哪些量，要求的输出是什么？','列式或写规则：哪个条件决定用这种方法？',...d.sol.map((_,i)=>`卷面第 ${i+1} 步：${i===0?'先写第一行计算或判断。':'根据上一行，写出下一步计算、判断或结论。'}`)];
+ if(guideIndex===prompts.length){stage.innerHTML=`<small>原题自查完成 · 不计入独立测验</small><h2>${fmt(d.t)}</h2><h3>我的解题记录</h3><ol>${guideLines.map(l=>`<li>${esc(l||'未填写')}</li>`).join('')}</ol><h3>参考卷面步骤</h3><ol>${d.sol.map(s=>`<li>${fmt(s)}</li>`).join('')}</ol><p class="ans">${fmt(d.ans)}</p><p>${fmt(d.trap)}</p>${btn('again','重新练习')} <button data-route="${ids.find(i=>bank.get(i).ch===d.ch)}">本章诊断专项</button>`;return;}
+ stage.innerHTML=`<small>原题 ${pad(d.n)}　/　分步自查 ${guideIndex+1} / ${prompts.length}</small><h2>${fmt(d.t)}</h2><p>${fmt(d.ex)}</p>${guideIndex>2?`<p class="muted">上一行参考：${fmt(d.sol[guideIndex-3])}</p>`:''}<label><b>${prompts[guideIndex]}</b><textarea id="draft" rows="2"></textarea></label><div class="controls">${btn('compare','对照本步',true)}${btn('teach','不会，讲这一步')}</div><div id="comparison"></div>`;}
+function compare(skip){const text=$('draft').value.trim();if(!text&&!skip){$('comparison').textContent='先写下你的判断，或选择「不会，讲这一步」。';return;}guideLines[guideIndex]=text;const d=guide,ref=guideIndex===0?d.when:guideIndex===1?d.f.join('；'):d.sol[guideIndex-2];$('comparison').innerHTML=`<div class="lesson"><b>${guideIndex===0?'题型线索':guideIndex===1?'公式与规则':'本步参考'}</b><p>${fmt(ref)}</p></div>${btn('advance','已核对，下一步',true)}`;}
+stage.addEventListener('submit',e=>{if(e.target.id==='answerForm'){e.preventDefault();grade();}});
+stage.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.route){route(+b.dataset.route,true);return;}switch(b.dataset.do){case 'unknown':grade(true);break;case 'plan':plan();break;case 'redo':ask('step');break;case 'basics':index=0;ask('step');break;case 'next':index++;ask('step');break;case 'test':ask('test');break;case 'compare':compare(false);break;case 'teach':compare(true);break;case 'advance':guideLines[guideIndex]=$('draft').value.trim();guideIndex++;guideStep();break;case 'again':startGuide(guide.n);break;}});
+$('content').addEventListener('click',e=>{const b=e.target.closest('[data-practice]');if(b)startGuide(+b.dataset.practice);});
+$('track').innerHTML=ids.map(i=>`<option value="${i}">第 ${bank.get(i).ch} 章 · ${tracks[i].name}</option>`).join('');$('track').onchange=()=>route(+$('track').value);$('start').onclick=()=>route(+$('track').value);$('plan').onclick=plan;
+const modules={
+ learn:['知识讲解','逐步讲解知识点','#193f73','#a3d6ff','M12 6c-3-2-6-2-10-1v14c4-1 7-1 10 1m0-14c3-2 6-2 10-1v7M12 6v14m4-3 2 2 4-5'],
+ qa:['智能问答','引导思考与提问','#155e52','#a2f2ce','M12 18V5a3 3 0 0 0-6-1 4 4 0 0 0-3 6 4 4 0 0 0 0 6 4 4 0 0 0 9 2Zm-6-8 2 1m5-2h5l2-3m-7 8h8m-8 4h4l3 3'],
+ drill:['随堂练习','生成闭卷变式题','#543b80','#e0c9ff','M8 5H5v16h14V5h-3M9 3h6v4H9z M8 14l3 3 5-6'],
+ errors:['错题分析','分析薄弱知识点','#79501d','#ffe2a2','M3 20v-4m5 4v-7m5 7v-5m5 5V9M3 12l6-6 4 3 8-7'],
+ graph:['知识图谱','查看知识关联','#1c5179','#b3eaff','M9 2h6v5H9z M12 7v4M5 16v-5h14v5M2 16h6v5H2z M16 16h6v5h-6z'],
+ report:['学习报告','查看学习进度','#65427a','#ead1ff','M2 8l10-5 10 5-10 5z M6 11v6q6 5 12 0v-6m4-3v8']};
+let active='',topic=2,part=0;
+$('hubGrid').innerHTML=Object.entries(modules).map(([key,[name,sub,tone,accent,path]])=>`<button class="tile" data-module="${key}" style="--tone:${tone};--accent:${accent}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg><b>${name}</b><span>${sub}</span><small>点击进入 →</small></button>`).join('');
+function panel(key){active=key;$('hub').hidden=true;$('backHub').hidden=false;$('desk').hidden=false;$('coachControls').hidden=!['qa','drill'].includes(key);$('sectionName').textContent=modules[key][0]+(key==='qa'?' · 离线引导问答':'');$('start').textContent=key==='drill'?'换一道题':'开始诊断';}
+function home(){const last=active;active='';$('hub').hidden=false;$('desk').hidden=true;$('backHub').hidden=true;document.querySelector(`[data-module="${last}"]`)?.focus();$('hub').scrollIntoView();}
+function lecture(n,p=0){topic=n;part=p;const d=bank.get(n),parts=[['识别题型',d.when],['核心规则',d.f.join('；')],...d.steps.map((s,j)=>[`解题步骤 ${j+1}`,s]),['检查易错点',d.trap]];stage.innerHTML=`<label>选择知识点 <select id="topicPick">${CHAPS.map(c=>`<optgroup label="第 ${c.n} 章">${D.filter(x=>x.ch===c.n).map(x=>`<option value="${x.n}" ${x.n===n?'selected':''}>${pad(x.n)} · ${esc(x.t)}</option>`).join('')}</optgroup>`).join('')}</select></label><h2>${fmt(d.t)}</h2><p>${fmt(d.ex)}</p><div class="lesson"><small>${p+1} / ${parts.length}　${parts[p][0]}</small><p>${fmt(parts[p][1])}</p></div><div class="controls">${p?'<button data-turn="-1">上一步</button>':''}${p+1<parts.length?'<button class="pri" data-turn="1">下一步</button>':''}<button data-g="${n}">动笔做原题</button></div>`;}
+function errorsView(){const bad=ids.filter(i=>history[i]?.miss).sort((a,b)=>history[b].miss-history[a].miss);stage.innerHTML='<h2>错题分析</h2>'+(bad.length?bad.map(i=>{const r=history[i];return `<section class="pathline"><b>${tracks[i].name}</b> · 累计 ${r.miss} 次错答或不会${r.streak?' · 已通过后续变式':''}${(r.errors||[{text:r.error}]).map(a=>`<details><summary>${esc(a.text||'历史错题')}</summary>${a.given!==undefined?`<p>你的作答：${esc(a.given)}</p><p>${esc(a.reason)}</p><p>参考步骤：${esc(a.work)}</p>`:'<p>旧记录未保存作答过程。</p>'}</details>`).join('')}<button data-retest="${i}">本专项换题复测</button></section>`;}).join(''):'<p>还没有专项错题记录。</p><button data-retest="2">做一道时延题</button>');}
+const paths=[['学习路径','从发送比特到获取文档。',[2,8,17,27,41,51]]];
+function graph(){stage.innerHTML='<h2>知识图谱</h2>'+paths.map(([label,desc,nodes])=>`<section class="pathline"><b>${label}</b><p class="muted">${desc}</p><div class="controls">${nodes.map(n=>`<button class="pathnode" data-topic="${n}">${fmt(bank.get(n).t)}</button>`).join('<span aria-hidden="true">→</span>')}</div></section>`).join('');}
+function report(){const trained=ids.filter(i=>history[i]?.last).length,won=ids.filter(i=>history[i]?.wins).length;stage.innerHTML=`<h2>学习报告</h2><div class="evidence"><span><b>${mastered.length} / ${D.length}</b>题型自评掌握</span><span><b>${trained} / 6</b>已作答专项</span><span><b>${won} / 6</b>独立答对过变式</span><span><b>${ids.filter(i=>todayDue(history[i])).length}</b>待复习专项</span></div><h3>分章进度</h3>`+CHAPS.map(c=>{const set=D.filter(d=>d.ch===c.n),i=ids.find(n=>bank.get(n).ch===c.n),r=history[i];return `<div class="pathline"><strong>${esc(c.t)}</strong><p>自评掌握 ${set.filter(d=>mastered.includes(d.n)).length}/${set.length}　·　${tracks[i].name}：${r?.wins?'独立答对 '+r.wins+' 次':r?.last?'已作答，尚未通过变式':'尚未作答'}</p></div>`;}).join('')+btn('plan','查看复习计划');}
+function openModule(key){panel(key);switch(key){case 'learn':lecture(topic);break;case 'qa':route(+$('track').value);break;case 'drill':practice(+$('track').value);break;case 'errors':errorsView();break;case 'graph':graph();break;case 'report':report();break;}stage.focus({preventScroll:true});$('backHub').scrollIntoView({block:'start'});}
+function practice(i){id=i;index=0;$('track').value=i;ask('test');}
+$('hubGrid').onclick=e=>{const b=e.target.closest('[data-module]');if(b)openModule(b.dataset.module);};$('backHub').onclick=home;
+const side=document.querySelector('aside a[href="#desk"]');side.textContent='学习中心 ↑';side.href='#hub';side.onclick=e=>{e.preventDefault();home();};
+const launch=()=>active==='drill'?practice(+$('track').value):route(+$('track').value);$('track').onchange=launch;$('start').onclick=launch;
+stage.addEventListener('change',e=>{if(e.target.id==='topicPick')lecture(+e.target.value);});
+stage.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset;if(a.topic){panel('learn');lecture(+a.topic);}else if(a.turn)lecture(topic,part+Number(a.turn));else if(a.g)startGuide(+a.g);else if(a.retest){panel('drill');practice(+a.retest);}else if(a.route){panel('qa');}if(a.topic||a.g||a.retest||a.route)stage.focus();});
+mountCenters({modules,openModule,panel,stage,plan,order,practice,startGuide,tracks,history,simulate,meter});
+})();
+</script>
+</body>
+</html>
